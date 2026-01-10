@@ -1,0 +1,3 @@
+*.sh
+flask-modules
+__pycache__
