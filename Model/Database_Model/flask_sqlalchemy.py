@@ -43,7 +43,6 @@ class Circuit_Model:
         self.price = price
         self.image = image
 
-
     
 
 class Itinerary(db.Model):
@@ -77,7 +76,7 @@ class Equipement_Model:
     equipment:str,
     circuit_id:int):
         self.id = id
-        self.equipement = equipment
+        self.equipment = equipment
         self.circuit_id = circuit_id
 
 class Included_task_in_Price(db.Model):
