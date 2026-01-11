@@ -23,6 +23,7 @@ class Instance_of_All_Data:
         data_brute = self.db.session.scalars(get_data_in_join).all()
         for circuit,adrenaline,itinerary,equipement,included in data_brute:
             self.Convert_Dict_Into_Class(circuit,adrenaline,itinerary,equipement,included)
+        self.db.session.close()
         await asyncio.sleep(3600)
         self.Fetch_From_Database()
 
