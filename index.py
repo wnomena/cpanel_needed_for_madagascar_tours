@@ -21,10 +21,10 @@ getter_from_controller = Modeliser_Class(db)
 @app.route("/")
 def get_all_section():
     return {
-        "circuit" : asyncio.run(getter_from_controller.Circuit_Modeliser),
-        "itineraire" : asyncio.run(getter_from_controller.Itinerary_Modeliser),
-        "equipement" : asyncio.run(getter_from_controller.Equipment_Modeliser),
-        "included" : asyncio.run(getter_from_controller.included)
+        "circuit" : asyncio.run(getter_from_controller.Circuit_Modeliser()),
+        "itineraire" : asyncio.run(getter_from_controller.Itinerary_Modeliser()),
+        "equipement" : asyncio.run(getter_from_controller.Equipment_Modeliser()),
+        "included" : asyncio.run(getter_from_controller.Included_Modeliser())
     }
 
 if __name__ == "__main__":

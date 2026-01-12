@@ -12,24 +12,18 @@ class Instance_of_All_Data:
     included:list[Included_task_in_Price_Model]
     def __init__(self,db:SQLAlchemy):
         self.db = db
-        with ThreadPoolExecutor(max_workers=2) as executor:
-            executor.submit(asyncio.run,self.Worker)
+        with ThreadPoolExecutor(max_workers=1) as executor:
+            executor.submit(asyncio.run,self.__Fetch_From_Database())
     
 
-    async def Worker(self):
-        while True:
-            await self.Fetch_From_Database()
-            await asyncio.sleep(3600)
-
-
-    async def Fetch_From_Database(self):
+    async def __Fetch_From_Database(self):
         get_data_in_join = select(Circuit,Adrenaline,Itinerary,Equipement,Included_task_in_Price).outerjoin(Circuit.adrenaline).outerjoin(Circuit.itinerary).outerjoin(Circuit.equipment_needed).outerjoin(Circuit.included_in_price)
         data_brute = await self.db.session.scalars(get_data_in_join).all()
         for circuit,adrenaline,itinerary,equipement,included in data_brute:
-            await asyncio.to_thread(self.Convert_Dict_Into_Class,circuit,adrenaline,itinerary,equipement,included)
+            await asyncio.to_thread(self.__Convert_Dict_Into_Class,circuit,adrenaline,itinerary,equipement,included)
         await asyncio.sleep(36)
 
-    async def Convert_Dict_Into_Class(self,circuit,adrenaline,itinerary,equipement,included):
+    async def __Convert_Dict_Into_Class(self,circuit,adrenaline,itinerary,equipement,included):
         self.circuit.clear()
         self.adrenaline.clear()
         self.itineraire.clear()

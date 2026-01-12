@@ -13,7 +13,7 @@ class Modeliser_Class(Instance_of_All_Data):
 # traitement pour modeliser les données de circcuit
     async def __For_Loop_For_Circuit(self,dataframe:pd.DataFrame):
         for index,rows in dataframe.iterrows():
-            await asyncio.to_thread(self.__circuit_like_hash.append(Circuit_Model(id=rows["id"],title=rows["title"],subtitle=rows["subtitle"],description=rows["description"],duration=rows["duration"],difficulty=rows["difficulty"],price=rows["price"],image=rows["image"])))
+            await asyncio.to_thread(self.__circuit_like_hash.append,Circuit_Model(id=rows["id"],title=rows["title"],subtitle=rows["subtitle"],description=rows["description"],duration=rows["duration"],difficulty=rows["difficulty"],price=rows["price"],image=rows["image"]))
     async def Circuit_Modeliser(self):
         data = pd.DataFrame(self.circuit).drop_duplicates()
         await self.__For_Loop_For_Circuit(data)
@@ -22,7 +22,7 @@ class Modeliser_Class(Instance_of_All_Data):
 #traitement pour les itineraires
     async def __For_Loop_For_Itinerary(self,dataframe:pd.DataFrame):
         for index,rows in dataframe.iterrows():
-            await asyncio.to_thread(self.__itinerary_like_hash.append(Itinerary_Model(id=rows["id"],place=rows["place"],order_id=rows["order_id"],circuit_id=rows["circuit_id"])))
+            await asyncio.to_thread(self.__itinerary_like_hash.append,Itinerary_Model(id=rows["id"],place=rows["place"],order_id=rows["order_id"],circuit_id=rows["circuit_id"]))
     
 
     async def Itinerary_Modeliser(self):
@@ -34,7 +34,7 @@ class Modeliser_Class(Instance_of_All_Data):
 
     async def __For_Loop_For_Equipement(self,dataframe:pd.DataFrame):
         for index,rows in dataframe.iterrows():
-            await asyncio.to_thread(self.__eqipement_like_hash.append(Equipement_Model(id=rows["id"],equipment=rows["equipment"],circuit_id=rows["circuit_id"])))
+            await asyncio.to_thread(self.__eqipement_like_hash.append,Equipement_Model(id=rows["id"],equipment=rows["equipment"],circuit_id=rows["circuit_id"]))
 
     async def Equipment_Modeliser(self):
         data = pd.DataFrame(self.equipement_needed).drop_duplicates()
@@ -45,9 +45,9 @@ class Modeliser_Class(Instance_of_All_Data):
 
     async def __For_Loop_For_Included(self,dataframe:pd.DataFrame):
         for index,rows in dataframe.iterrows():
-            await asyncio.to_thread(self.__included_in_price.append(Equipement_Model(id=rows["id"],equipment=rows["equipment"],circuit_id=rows["circuit_id"])))
+            await asyncio.to_thread(self.__included_in_price.append,Included_task_in_Price_Model(id=rows["id"],content=rows["content"],circuit_id=rows["circuit_id"]))
 
-    async def Equipment_Modeliser(self):
+    async def Included_Modeliser(self):
         data = pd.DataFrame(self.included).drop_duplicates()
         await self.__For_Loop_For_Included(data)
         return self.__eqipement_like_hash
