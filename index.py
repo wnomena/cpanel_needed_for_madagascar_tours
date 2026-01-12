@@ -10,7 +10,7 @@ password = os.getenv("password")
 database_name = os.getenv("database_name")
 database_hosting = os.getenv("database_hosting")
 
-app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql+pymysql://{user}:{password}@{database_hosting}:3306/{database_name}"
+app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql+aiomysql://{user}:{password}@{database_hosting}:3306/{database_name}"
 db.init_app(app=app)
 
 @app.route("/")
