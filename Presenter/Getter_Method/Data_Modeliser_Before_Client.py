@@ -1,14 +1,15 @@
+from flask_sqlalchemy import SQLAlchemy
 from Model.Database_Model.flask_sqlalchemy import Circuit_Model, Equipement_Model, Itinerary_Model,Included_task_in_Price_Model
 from Model.Getter_Method.get_all_data import Instance_of_All_Data
 import asyncio
 import pandas as pd
  
 class Modeliser_Class(Instance_of_All_Data):
-    __circuit_like_hash:list[Circuit_Model]
-    __itinerary_like_hash:list[Itinerary_Model]
-    __eqipement_like_hash:list[Equipement_Model]
-    __included_in_price:list[Included_task_in_Price_Model]
-    def __init__(self, db):
+    __circuit_like_hash:list[Circuit_Model] = []
+    __itinerary_like_hash:list[Itinerary_Model] = []
+    __eqipement_like_hash:list[Equipement_Model] = []
+    __included_in_price:list[Included_task_in_Price_Model] = []
+    def __init__(self, db:SQLAlchemy):
         super().__init__(db)
 # traitement pour modeliser les données de circcuit
     async def __For_Loop_For_Circuit(self,dataframe:pd.DataFrame):

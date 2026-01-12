@@ -5,11 +5,11 @@ from sqlalchemy import select
 from Model.Database_Model.flask_sqlalchemy import Adrenaline, Adrenaline_Model, Circuit, Circuit_Model, Equipement, Equipement_Model, Included_task_in_Price, Included_task_in_Price_Model, Itinerary, Itinerary_Model
 
 class Instance_of_All_Data:
-    circuit:list[Circuit_Model]
-    adrenaline:list[Adrenaline_Model]
-    itineraire:list[Itinerary_Model]
-    equipement_needed:list[Equipement_Model]
-    included:list[Included_task_in_Price_Model]
+    circuit:list[Circuit_Model] = []
+    adrenaline:list[Adrenaline_Model]  = []
+    itineraire:list[Itinerary_Model] = []
+    equipement_needed:list[Equipement_Model] = []
+    included:list[Included_task_in_Price_Model] = []
     def __init__(self,db:SQLAlchemy):
         self.db = db
         with ThreadPoolExecutor(max_workers=1) as executor:

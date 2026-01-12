@@ -1,7 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import Mapped,mapped_column,DeclarativeBase,relationship
 from sqlalchemy import String,Integer,ForeignKey
-from pydantic import BaseModel
 
 class Base(DeclarativeBase):
     pass
@@ -125,17 +124,6 @@ class Contact(db.Model):
     circuit_id:Mapped[int] = mapped_column(Integer,ForeignKey("circuit.id"),nullable=True)
     Completed:Mapped[int] = mapped_column(Integer,default=1,nullable=False)
     circuit = relationship("Circuit",back_populates="contact")
-
-class Contact_Model(BaseModel):
-    id:int | None = None
-    name:str
-    subject:str | None = None
-    body:str
-    mail:str
-    number:str | None = None
-    begining:str | None = None
-    number_of_person:int | None = None
-    total_price:int | None = None
 
 class Contact_Model_without_Pydantic:
     def __init__(self,    id:int | None,
