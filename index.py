@@ -1,9 +1,8 @@
 from flask import Flask,make_response
-from Model.Database_Model.flask_sqlalchemy import db
 import dotenv
 import asyncio
 import os
-
+from sqlalchemy.ext.asyncio import create_async_engine
 from Model.Setter_Method.insert_contact import Insert_Contact_Class
 from Presenter.Getter_Method.Data_Modeliser_Before_Client import Modeliser_Class
 
@@ -14,11 +13,10 @@ password = os.getenv("password")
 database_name = os.getenv("database_name")
 database_hosting = os.getenv("database_hosting")
 
-app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql+aiomysql://{user}:{password}@{database_hosting}:3306/{database_name}"
-db.init_app(app=app)
+engine = create_async_engine(f"mysql+aiomysql://{user}:{password}@{database_hosting}:3306/{database_name}")
 
-getter_from_controller = Modeliser_Class(db)
-setter_for_contact = Insert_Contact_Class(db)
+getter_from_controller = Modeliser_Class(engine)
+setter_for_contact = Insert_Contact_Class(engine)
 
 @app.route("/")
 def get_all_section():

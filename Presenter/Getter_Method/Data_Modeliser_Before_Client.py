@@ -1,4 +1,4 @@
-from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.ext.asyncio import AsyncEngine
 from Model.Database_Model.flask_sqlalchemy import Adrenaline_Model, Circuit_Model, Equipement_Model, Itinerary_Model,Included_task_in_Price_Model
 from Model.Getter_Method.get_all_data import Instance_of_All_Data
 import asyncio
@@ -10,7 +10,7 @@ class Modeliser_Class(Instance_of_All_Data):
     __eqipement_like_hash:list[Equipement_Model] = []
     __included_in_price:list[Included_task_in_Price_Model] = []
     __adrenaline_like_hash:list[Adrenaline_Model] = []
-    def __init__(self, db:SQLAlchemy):
+    def __init__(self, db:AsyncEngine):
         super().__init__(db)
 
 # traitement pour modeliser les données de adrenaline

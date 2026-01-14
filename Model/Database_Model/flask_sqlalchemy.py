@@ -1,13 +1,13 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import Mapped,mapped_column,DeclarativeBase,relationship
 from sqlalchemy import String,Integer,ForeignKey
+from sqlalchemy.ext.asyncio import AsyncAttrs
 
-class Base(DeclarativeBase):
+class Base(AsyncAttrs,DeclarativeBase):
     pass
 
-db = SQLAlchemy(model_class=Base)
 
-class Circuit(db.Model):
+class Circuit(Base):
     __tablename__ = "circuit"
     id:Mapped[int] = mapped_column(primary_key=True)
     title:Mapped[str] = mapped_column(String(50),nullable=False)
@@ -22,6 +22,10 @@ class Circuit(db.Model):
     included_in_price = relationship("Included_task_in_Price",back_populates="circuit")
     contact = relationship("Contact",back_populates="circuit")
     adrenaline = relationship("Adrenaline",back_populates="circuit")
+
+
+    def __repr__(self):
+        return f"Bonjour {self.title!r}"
 
 class Circuit_Model:
     def __init__(self,
@@ -44,7 +48,7 @@ class Circuit_Model:
 
     
 
-class Itinerary(db.Model):
+class Itinerary(Base):
     __tablename__= "itinerary"
     id:Mapped[int] = mapped_column(Integer,primary_key=True)
     place:Mapped[str] = mapped_column(String,nullable=False)
@@ -63,7 +67,7 @@ class Itinerary_Model:
         self.circuit_id = circuit_id
 
 
-class Equipement(db.Model):
+class Equipement(Base):
     __tablename__= "equipment_needed"
     id:Mapped[int] = mapped_column(Integer,primary_key=True)
     equipment:Mapped[str] = mapped_column(String,nullable=False)
@@ -78,7 +82,7 @@ class Equipement_Model:
         self.equipment = equipment
         self.circuit_id = circuit_id
 
-class Included_task_in_Price(db.Model):
+class Included_task_in_Price(Base):
     __tablename__= "included_in_price"
     id:Mapped[int] = mapped_column(Integer,primary_key=True)
     content:Mapped[str] = mapped_column(String,nullable=False)
@@ -93,7 +97,7 @@ class Included_task_in_Price_Model:
         self.content = content
         self.circuit_id = circuit_id
 
-class Adrenaline(db.Model):
+class Adrenaline(Base):
     __tablename__= "adrenaline"
     id:Mapped[int] = mapped_column(Integer,primary_key=True)
     content:Mapped[str] = mapped_column(String,nullable=False)
@@ -110,7 +114,7 @@ class Adrenaline_Model:
 
 
 
-class Contact(db.Model):
+class Contact(Base):
     __tablename__ = "contact"
     id:Mapped[int] = mapped_column(Integer,primary_key=True)
     name:Mapped[str] = mapped_column(String,nullable=False)
@@ -149,7 +153,7 @@ class Contact_Model_without_Pydantic:
         self.Completed = Completed
 
     
-class User_of_Database_for_Sqlite(db.Model):
+class User_of_Database_for_Sqlite(Base):
     __tablename__="database_info"
     id:Mapped[int] = mapped_column(Integer,primary_key=True)
     database_name:Mapped[str] = mapped_column(String,nullable=False)
