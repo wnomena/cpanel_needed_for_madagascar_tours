@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from Model.Database_Model.flask_sqlalchemy import Circuit_Model, Equipement_Model, Itinerary_Model,Included_task_in_Price_Model
+from Model.Database_Model.flask_sqlalchemy import Adrenaline_Model, Circuit_Model, Equipement_Model, Itinerary_Model,Included_task_in_Price_Model
 from Model.Getter_Method.get_all_data import Instance_of_All_Data
 import asyncio
 import pandas as pd
@@ -9,8 +9,20 @@ class Modeliser_Class(Instance_of_All_Data):
     __itinerary_like_hash:list[Itinerary_Model] = []
     __eqipement_like_hash:list[Equipement_Model] = []
     __included_in_price:list[Included_task_in_Price_Model] = []
+    __adrenaline_like_hash:list[Adrenaline_Model] = []
     def __init__(self, db:SQLAlchemy):
         super().__init__(db)
+
+# traitement pour modeliser les données de adrenaline
+    async def __For_Loop_For_Adrenaline(self,dataframe:pd.DataFrame):
+        for index,rows in dataframe.iterrows():
+            await asyncio.to_thread(self.__adrenaline_like_hash.append,Circuit_Model(id=rows["id"],title=rows["title"],subtitle=rows["subtitle"],description=rows["description"],duration=rows["duration"],difficulty=rows["difficulty"],price=rows["price"],image=rows["image"]))
+    async def Adrenaline_Modeliser(self):
+        data = pd.DataFrame(self.adrenaline).drop_duplicates()
+        await self.__For_Loop_For_Adrenaline(data)
+        return self.__adrenaline_like_hash
+
+
 # traitement pour modeliser les données de circcuit
     async def __For_Loop_For_Circuit(self,dataframe:pd.DataFrame):
         for index,rows in dataframe.iterrows():
@@ -51,4 +63,4 @@ class Modeliser_Class(Instance_of_All_Data):
     async def Included_Modeliser(self):
         data = pd.DataFrame(self.included).drop_duplicates()
         await self.__For_Loop_For_Included(data)
-        return self.__eqipement_like_hash
+        return self.__included_in_price

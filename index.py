@@ -24,6 +24,7 @@ setter_for_contact = Insert_Contact_Class(db)
 def get_all_section():
     return {
         "circuit" : asyncio.run(getter_from_controller.Circuit_Modeliser()),
+        "adrenaline" : asyncio.run(getter_from_controller.Adrenaline_Modeliser()),
         "itineraire" : asyncio.run(getter_from_controller.Itinerary_Modeliser()),
         "equipement" : asyncio.run(getter_from_controller.Equipment_Modeliser()),
         "included" : asyncio.run(getter_from_controller.Included_Modeliser())
