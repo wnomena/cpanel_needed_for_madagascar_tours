@@ -1,4 +1,4 @@
-from flask import Flask,make_response
+from flask import Flask, jsonify,make_response
 import dotenv
 import asyncio
 import os
@@ -20,13 +20,13 @@ setter_for_contact = Insert_Contact_Class(engine)
 
 @app.route("/")
 def get_all_section():
-    return {
+    return jsonify({
         "circuit" : asyncio.run(getter_from_controller.Circuit_Modeliser()),
         "adrenaline" : asyncio.run(getter_from_controller.Adrenaline_Modeliser()),
         "itineraire" : asyncio.run(getter_from_controller.Itinerary_Modeliser()),
-        "equipement" : asyncio.run(getter_from_controller.Equipment_Modeliser()),
+        "equipement" : asyncio.run(getter_from_controller.Equipement_Modeliser()),
         "included" : asyncio.run(getter_from_controller.Included_Modeliser())
-    }
+    })
 
 @app.route("/")
 def add_contact():

@@ -105,9 +105,7 @@ class Adrenaline(Base):
     circuit = relationship("Circuit",back_populates="adrenaline")
 
 class Adrenaline_Model:
-    def __init__(self,id:int | None,
-    content:str,
-    circuit_id:int):
+    def __init__(self,id:int | None,content:str,circuit_id:int):
         self.id = id
         self.content = content
         self.circuit_id = circuit_id

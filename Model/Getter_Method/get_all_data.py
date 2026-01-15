@@ -17,25 +17,26 @@ class Instance_of_All_Data:
     async def __Fetch_From_Database(self):
         async with self.async_session() as session:
             get_data_in_join = select(Circuit,Adrenaline,Itinerary,Equipement,Included_task_in_Price).outerjoin(Circuit.adrenaline).outerjoin(Circuit.itinerary).outerjoin(Circuit.equipment_needed).outerjoin(Circuit.included_in_price)
-            data_brute = await session.scalars(get_data_in_join)
-            for circuit in data_brute:
-                print(circuit)
-            session.close()
-                #await self.__Convert_Dict_Into_Class(circuit,adrenaline,itinerary,equipement,included)
-
-    async def __Convert_Dict_Into_Class(self,circuit,adrenaline,itinerary,equipement,included):
+            data_brute = await session.execute(get_data_in_join)
+            for row in data_brute:
+                await self.__Convert_Dict_Into_Class(row[0],row[1],row[2],row[3],row[4])
+            await session.close()
+ 
+    async def __Convert_Dict_Into_Class(self,circuit:Circuit_Model,adrenaline:Adrenaline_Model,itinerary:Itinerary_Model,equipement:Equipement_Model,included:Included_task_in_Price_Model):
         self.circuit.clear()
         self.adrenaline.clear()
         self.itineraire.clear()
         self.equipement_needed.clear()
         self.included.clear()
-        circuit_dict = circuit.__dict__
-        await self.circuit.append(Circuit_Model(id=circuit_dict["id"],title=circuit_dict["title"],subtitle=circuit_dict["subtitle"],description=circuit_dict["description"],duration=circuit_dict["duration"],difficulty=circuit_dict["difficulty"],price=circuit_dict["price"],image=circuit_dict["image"]))
-        adrenaline_dict = adrenaline.__dict__
-        await self.adrenaline.append(Adrenaline_Model(id=adrenaline_dict["id"],content=adrenaline_dict["content"],circuit_id=adrenaline_dict["circuit_id"]))
-        itinerary_dict = itinerary.__dict__
-        await self.itineraire.append(Itinerary_Model(id=itinerary_dict["id"],place=itinerary_dict["place"],order_id=itinerary_dict["order_id"],circuit_id=itinerary_dict["circuit_id"]))
-        equipement_dict = equipement.__dict__
-        await self.equipement_needed.append(Equipement_Model(id=equipement_dict["id"],equipment=equipement_dict["equipment"],circuit_id=equipement_dict["circuit_id"]))
-        included_dict = included.__dict__
-        await self.included.append(Included_task_in_Price_Model(id=included_dict["id"],content=included_dict["content"],circuit_id=included_dict["circuit_id"]))
+        print(circuit.id)
+        print(adrenaline.id)
+        print(itinerary.id)
+        print(equipement.id)
+        print(included.id)
+
+        self.circuit.append(Circuit_Model(id=circuit.id,title=circuit.title,subtitle=circuit.subtitle,description=circuit.description,duration=circuit.duration,difficulty=circuit.difficulty,price=circuit.price,image=circuit.image))
+        self.adrenaline.append(Adrenaline_Model(id=adrenaline.id,content=adrenaline.content,circuit_id=adrenaline.circuit_id))
+        self.itineraire.append(Itinerary_Model(id=itinerary.id,place=itinerary.place,order_id=itinerary.order_id,circuit_id=itinerary.circuit_id))
+        self.equipement_needed.append(Equipement_Model(id=equipement.id,equipment=equipement.equipment,circuit_id=equipement.circuit_id))
+        self.included.append(Included_task_in_Price_Model(id=included.id,content=included.content,circuit_id=included.circuit_id))
+        await asyncio.sleep(0)
