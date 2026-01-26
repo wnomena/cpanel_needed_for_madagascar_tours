@@ -46,6 +46,18 @@ class Circuit_Model:
         self.price = price
         self.image = image
 
+    def to_dict(self):
+        return {
+        "id":self.id,
+        "title":self.title,
+        "subtitle":self.subtitle,
+        "description":self.description,
+        "duration":self.duration,
+        "difficulty":self.difficulty,
+        "price":self.price,
+        "image":self.image
+        }
+
     
 
 class Itinerary(Base):
@@ -65,6 +77,15 @@ class Itinerary_Model:
         self.place = place
         self.order_id = order_id
         self.circuit_id = circuit_id
+    def to_dict(self):
+        return {
+            "id":self.id,
+            "place":self.place,
+            "order_id":self.order_id,
+            "circuit_id":self.circuit_id
+        }
+
+    
 
 
 class Equipement(Base):
@@ -81,6 +102,12 @@ class Equipement_Model:
         self.id = id
         self.equipment = equipment
         self.circuit_id = circuit_id
+    def to_dict(self):
+        return {
+            "id":self.id,
+            "equipment":self.equipment,
+            "circuit_id":self.circuit_id
+        }
 
 class Included_task_in_Price(Base):
     __tablename__= "included_in_price"
@@ -96,6 +123,12 @@ class Included_task_in_Price_Model:
         self.id = id
         self.content = content
         self.circuit_id = circuit_id
+    def to_dict(self):
+        return {
+            "id":self.id,
+            "content":self.content,
+            "circuit_id":self.circuit_id
+        }
 
 class Adrenaline(Base):
     __tablename__= "adrenaline"
@@ -109,6 +142,14 @@ class Adrenaline_Model:
         self.id = id
         self.content = content
         self.circuit_id = circuit_id
+    def to_dict(self):
+        return {
+            "id":self.id,
+            "content":self.content,
+            "circuit_id":self.circuit_id
+        }
+
+    
 
 
 

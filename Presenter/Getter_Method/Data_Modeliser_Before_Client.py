@@ -20,10 +20,11 @@ class Modeliser_Class(Instance_of_All_Data):
             for key,element in enumerate(self.__circuit_like_hash):
                 if element.id != dataframe.id and key == len(self.__circuit_like_hash) - 1:
                     await self.__circuit_like_hash.append(Circuit_Model(id=dataframe.id,title=dataframe.title,subtitle=dataframe.subtitle,description=dataframe.description,duration=dataframe.duration,difficulty=dataframe.difficulty,price=dataframe.price,image=dataframe.image))
-        await asyncio.sleep(0)
+                await asyncio.sleep(0)
     async def Circuit_Modeliser(self):
         for element in self.circuit:
             await self.__For_Loop_For_Circuit(element)
+            await asyncio.sleep(0)
         return self.__circuit_like_hash
 # traitement pour modeliser les données de circcuit
     async def __For_Loop_For_Adrenaline(self,dataframe:Adrenaline_Model):
@@ -33,10 +34,11 @@ class Modeliser_Class(Instance_of_All_Data):
             for key,element in enumerate(self.__adrenaline_like_hash):
                 if element.id != dataframe.id and key == len(self.__adrenaline_like_hash) - 1:
                     await self.__adrenaline_like_hash.append(Adrenaline_Model(id=dataframe.id,content=dataframe.content,circuit_id=dataframe.circuit_id))
-        await asyncio.sleep(0)
+                await asyncio.sleep(0)
     async def Adrenaline_Modeliser(self):
         for element in self.adrenaline:
             await self.__For_Loop_For_Adrenaline(element)
+            await asyncio.sleep(0)
         return self.__adrenaline_like_hash
 #traitement pour les itineraires
     async def __For_Loop_For_Itinerary(self,dataframe:Itinerary_Model):
@@ -46,10 +48,11 @@ class Modeliser_Class(Instance_of_All_Data):
             for key,element in enumerate(self.__itinerary_like_hash):
                 if element.id != dataframe.id and key == len(self.__itinerary_like_hash) - 1:
                     await self.__itinerary_like_hash.append(Itinerary_Model(id=dataframe.id,place=dataframe.place,order_id=dataframe.order_id,circuit_id=dataframe.circuit_id))
-        await asyncio.sleep(0)
+                await asyncio.sleep(0)
     async def Itinerary_Modeliser(self):
         for element in self.itineraire:
             await self.__For_Loop_For_Itinerary(element)
+            await asyncio.sleep(0)
         return self.__itinerary_like_hash
 
 #traitement pour les équipements
@@ -61,7 +64,7 @@ class Modeliser_Class(Instance_of_All_Data):
             for key,element in enumerate(self.__eqipement_like_hash):
                 if element.id != dataframe.id and key == len(self.__eqipement_like_hash) - 1:
                     await self.__eqipement_like_hash.append(Equipement_Model(id=dataframe.id,equipment=dataframe.equipment,circuit_id=dataframe.circuit_id))
-        await asyncio.sleep(0)
+                await asyncio.sleep(0)
     async def Equipement_Modeliser(self):
         for element in self.equipement_needed:
             await self.__For_Loop_For_Equipement(element)
@@ -74,8 +77,9 @@ class Modeliser_Class(Instance_of_All_Data):
             for key,element in enumerate(self.__included_in_price):
                 if element.id != dataframe.id and key == len(self.__included_in_price) - 1:
                     await self.__included_in_price.append(Included_task_in_Price_Model(id=dataframe.id,content=dataframe.content,circuit_id=dataframe.circuit_id))
-        await asyncio.sleep(0)
+                await asyncio.sleep(0)
     async def Included_Modeliser(self):
         for element in self.adrenaline:
             await self.__For_Loop_For_Included(element)
+            await asyncio.sleep(0)
         return self.__included_in_price
