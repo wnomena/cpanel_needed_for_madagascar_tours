@@ -83,3 +83,10 @@ class Modeliser_Class(Instance_of_All_Data):
             await self.__For_Loop_For_Included(element)
             await asyncio.sleep(0)
         return self.__included_in_price
+    
+
+    async def Getter_For_Tour_Price(self,id:int):
+        for element in self.__circuit_like_hash:
+            if element.id == id:
+                return element
+            await asyncio.sleep(0)

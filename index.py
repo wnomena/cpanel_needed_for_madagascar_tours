@@ -55,10 +55,10 @@ def get_all_section():
 def add_contact():
     data = request.form
     temp:Contact_Model_without_Pydantic = None
-    if data.get("subjet"):
-        temp = Contact_Model_without_Pydantic(name=data.get("name"),subject=data.get("subject"),body=data.get("body"),number=data.get("number"),begining=data.get("begining"),number_of_person=data.get("number_of_person"),circuit_id=data.get("circuit_id"))
+    if data.get("number"):
+        temp = Contact_Model_without_Pydantic(name=data.get("name"),subject=None,body=data.get("body"),number=data.get("number"),begining=data.get("begining"),number_of_person=data.get("number_of_person"),circuit_id=data.get("circuit_id"),total_price=asyncio.run(getter_from_controller.Getter_For_Tour_Price())*data.get("number_of_person"),Completed=1)
     else:
-        temp = Contact_Model_without_Pydantic(name=data.get("name"),body=data.get("body"),mail=data.get("mail"))
+        temp = Contact_Model_without_Pydantic(name=data.get("name"),subject=data.get("subjet"),body=data.get("body"),mail=data.get("mail"),number=None,begining=None,number_of_person=None,circuit_id=None,total_price=None,id=None,Completed=1)
     try:
         asyncio.run(setter_for_contact.Insert_Contact(temp))
         return make_response("Votre données a bien été sauvegardé")
