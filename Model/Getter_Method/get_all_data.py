@@ -15,6 +15,11 @@ class Instance_of_All_Data:
     
 
     async def __Fetch_From_Database(self):
+        self.circuit = []
+        self.adrenaline = []
+        self.itineraire = []
+        self.included = []
+        self.equipement_needed = []
         async with self.async_session() as session:
             get_data_in_join = select(Circuit,Adrenaline,Itinerary,Equipement,Included_task_in_Price).outerjoin(Circuit.adrenaline).outerjoin(Circuit.itinerary).outerjoin(Circuit.equipment_needed).outerjoin(Circuit.included_in_price)
             data_brute = await session.execute(get_data_in_join)
@@ -23,17 +28,7 @@ class Instance_of_All_Data:
             await session.close()
  
     async def __Convert_Dict_Into_Class(self,circuit:Circuit_Model,adrenaline:Adrenaline_Model,itinerary:Itinerary_Model,equipement:Equipement_Model,included:Included_task_in_Price_Model):
-        self.circuit.clear()
-        self.adrenaline.clear()
-        self.itineraire.clear()
-        self.equipement_needed.clear()
-        self.included.clear()
-        print(circuit.id)
-        print(adrenaline.id)
-        print(itinerary.id)
-        print(equipement.id)
-        print(included.id)
-
+        
         self.circuit.append(Circuit_Model(id=circuit.id,title=circuit.title,subtitle=circuit.subtitle,description=circuit.description,duration=circuit.duration,difficulty=circuit.difficulty,price=circuit.price,image=circuit.image))
         self.adrenaline.append(Adrenaline_Model(id=adrenaline.id,content=adrenaline.content,circuit_id=adrenaline.circuit_id))
         self.itineraire.append(Itinerary_Model(id=itinerary.id,place=itinerary.place,order_id=itinerary.order_id,circuit_id=itinerary.circuit_id))
